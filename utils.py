@@ -327,7 +327,7 @@ class TableStats:
 
         print(df)
 
-        if filename:
+        if filename.strip():
             print("Saving table profiling results to {}".format(filename))    
             append_excel(df, filename, sheetname='Sheet1', index=False)
 
@@ -430,25 +430,29 @@ class TableComp:
         :return: DataFrame and save to an excel file
         """
         
-        if filename.strip() == '':
-            current_time = strftime("%Y-%m-%d_%H%M", gmtime()) 
-            filename = '/Users/mliu-ext/downloads/{}_{}_vs_{}.xlsx'.format(current_time, tableA.table, tableB.table)
-        
-        print('\nResults will be saved in {}'.format(filename))
-        
         _, cols_df = self.compare_group_count(tableA.columns, tableB.columns)
         
         cols = cols_df[cols_df._merge == 'both'].col_name.to_list()[:]
 
         if len(cols) == 0:
-            raise Exception("two tables have NO common columns")
+            print()
+            raise Exception("Two tables have NO common columns\n")
 
         # compare row counts
         res = self.compare_count(tableA.row_count, tableB.row_count)
-        append_excel(res, filename, sheetname='Sheet1', index=False)
+
+        # compare column name and type
+        df_res, dft = self.compare_group_count(tableA.get_column_names_with_type(), tableB.get_column_names_with_type())
+        if df_res['results'].iloc[0] != 'PASSED':
+            print(df_res)
+            print(dft)
+            sys.exit("Two tables have different column name or type")
+
+        res = res.append(df_res, sort=False)
         
         print("\nComparing two tables coloumn by column. number of columns: {}\n".format(len(cols)))
 
+        # compare count group by each column
         for column in tqdm(cols):
             print("comparing column: {}".format(column))
 
@@ -468,7 +472,9 @@ class TableComp:
             else:
                 df = df.append(dft, sort=False)
 
-            append_excel(df_res, filename, sheetname='Sheet1', index=False)
-            append_excel(dft, filename, sheetname='Sheet2', index=True)
+        if filename.strip():
+            print('\n Saving comparison results in the file [{}]'.format(filename))
+            append_excel(res, filename, sheetname='Sheet1', index=False)
+            append_excel(df, filename, sheetname='Sheet2', index=True)
 
         return res.reset_index(drop=True), df

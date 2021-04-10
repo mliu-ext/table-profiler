@@ -16,16 +16,22 @@ if __name__ == '__main__':
 	print(info)
 
 
-	table = 'SNOWFLAKE_SAMPLE_DATA.TPCDS_SF100TCL.Call_Center0000'	
+	table = 'SNOWFLAKE_SAMPLE_DATA.TPCDS_SF100TCL.Call_Center'	
 
 	# print(pd.read_sql("desc table {}".format(table), con))
 
-	TableStats(table, con)
+	TS = TableStats(table, con)
 
+	print(TS.get_column_names_with_type())
+
+
+	TC = TableComp()
+	df = TC.compare_group_count(TS.get_column_names_with_type(), TS.get_column_names_with_type())
+	print(df)
 
 	print("describe table {}".format(table))
 	try:
-		print(pd.read_sql("desc table {}".format(table), con))
+		pd.read_sql("desc table {}".format(table), con)
 	except:
 		# raise SystemExit('error in code want to exit')
 		# raise Exception('Failed to open database')

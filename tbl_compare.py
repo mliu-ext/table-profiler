@@ -5,14 +5,20 @@
 from utils import *
 import argparse
 from snowflake_config import SNOW_CONFIG
+import time
 
 def main(table_left, table_right, filename):
 	# create snowflake connector
 	con = sn_conn(SNOW_CONFIG)
-	query = "select current_role(), current_warehouse(), current_database(), current_schema()"
+	query = "select current_role(), current_warehouse()"
 	info = pd.read_sql(query, con)
 
-	print()
+	# if filename.strip() == '':
+ #        current_time = strftime("%Y-%m-%d_%H%M", gmtime()) 
+ #        filename = '/Users/mliu-ext/downloads/{}_{}_vs_{}.xlsx'.format(current_time, table_left, table_right)
+        
+ #    print('\nResults will be saved in {}'.format(filename))
+
 	print(info)
 
 	left = TableStats(table_left, con)
@@ -21,7 +27,7 @@ def main(table_left, table_right, filename):
 	TC = TableComp()
 	res, df = TC.compare_all_cols(left, right, filename=filename)
 
-	print("-------------------------------------comparison results---------------------------------------------")
+	print("-------------------------------------comparison summary---------------------------------------------")
 	print(res)
 
 	con.close()
@@ -41,4 +47,8 @@ if __name__ == '__main__':
 	table_right = args.table_right
 	filename = args.file if args.file else ''	
 
+	t1 = time.time()
+
 	main(table_left, table_right, filename)
+	
+	print('It took {:.0f} seconds to run'.format(time.time() - t1))

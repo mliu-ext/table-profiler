@@ -32,13 +32,7 @@ if __name__ == '__main__':
 
     tblStats = TableStats(table, con)
     tblStats.profile_all_columns(filename)
-    # profile_all_columns(table, '')
+
     con.close()
 
     print('It took {:.0f} seconds to run'.format(time.time() - t1))
-
-
-
-
-
-
