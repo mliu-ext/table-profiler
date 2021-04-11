@@ -23,15 +23,15 @@ Check if column name and type are the same
 
 Check if the count grouped by column is the same for each column 
 
-Summary is printed out in console. It is optional to save details of results to excel. The results could be used for touble shooting. 
+Summary is printed out in console. It is optional to save details of results to an excel file. When tests fail the results could be used for touble shooting. 
 
 ## Installation
 
-git clone https://github.com/mliu-ext/table-profiler.git
+1. git clone https://github.com/mliu-ext/table-profiler.git
 
-setup snowflake account config in snowflake_config.py. External brower SSO authentication is used. No password is needed in config.
+2. setup snowflake account config in snowflake_config.py. External brower SSO authentication is used. No password is needed in config.
 
-setup up python environment
+3. setup up python environment
 
 run the following command to install required packages:
 
@@ -50,15 +50,15 @@ Note: table name should be passed in with the db name and schema name in the fol
 
 `db_name.schema_name.table_name`
 
-### run table profile tool tbl_profiler_sn.py
+### run table profiler tool tbl_profiler_sn.py
 
 `python tbl_profiler_sn.py full_path_table_name`
 
-run below cmd if you want to save the results to an excel file
+run table profiler and save esults to an excel file
 
 `python tbl_profiler_sn.py full_path_table_name -f file_path/filename.xlsx`
 
-Example 
+Examples
 
 `python tbl_profiler_sn.py SNOWFLAKE_SAMPLE_DATA.TPCDS_SF100TCL.Call_Center -f test.xlsx`
 
@@ -66,12 +66,12 @@ Example
 
 `python tbl_compare.py full_path_table_A_name full_path_table_B_name`
 
-run comparison and save results to excel file
+run table comparison and save results to an excel file
 
 `python tbl_compare.py full_path_table_A_name full_path_table_B_name -f file_path/filename.xlsx`
 
 
-Examples below
+Examples
 
 `python tbl_compare.py SNOWFLAKE_SAMPLE_DATA.TPCDS_SF100TCL.Call_Center SNOWFLAKE_SAMPLE_DATA.TPCDS_SF100TCL.Call_Center`
 
