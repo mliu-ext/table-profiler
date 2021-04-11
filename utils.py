@@ -393,7 +393,7 @@ class TableComp:
         else:
             df_res.loc[0, 'test_type'] = 'DistinctValue'
 
-        df = pd.merge(df_A, df_B, on=cols, how='outer', indicator=True, suffixes=('_left', '_right'))
+        df = pd.merge(df_A, df_B, on=cols, how='outer', indicator=True, suffixes=('_left', '_right')).sort_values(cols)
 
         df_res.loc[0, 'column_names'] = cols
         df_res.loc[0, 'shared'] = sum(df._merge == 'both')

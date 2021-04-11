@@ -25,7 +25,6 @@ if __name__ == '__main__':
     query = "select current_role(), current_warehouse()"
     info = pd.read_sql(query, con)
 
-    print()
     print(info)
 
     t1 = time.time()
