@@ -24,7 +24,6 @@ if __name__ == '__main__':
 
 	print(TS.get_column_names_with_type())
 
-
 	TC = TableComp()
 	df = TC.compare_group_count(TS.get_column_names_with_type(), TS.get_column_names_with_type())
 	print(df)

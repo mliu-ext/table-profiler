@@ -13,11 +13,11 @@ def main(table_left, table_right, filename):
 	query = "select current_role(), current_warehouse()"
 	info = pd.read_sql(query, con)
 
-	if filename.strip() == '':
-		current_time = strftime("%Y-%m-%d_%H%M", gmtime()) 
-		filename = 'output/{}_{}_vs_{}.xlsx'.format(current_time, table_left, table_right)
+	# if filename.strip() == '':
+	# 	current_time = strftime("%Y-%m-%d_%H%M", gmtime()) 
+	# 	filename = 'output/{}_{}_vs_{}.xlsx'.format(current_time, table_left, table_right)
         
-	print('\nResults will be saved in {}'.format(filename))
+	# print('\nResults will be saved in {}'.format(filename))
 
 	print(info)
 
