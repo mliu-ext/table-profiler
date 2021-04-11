@@ -361,14 +361,14 @@ class TableComp:
             result = 'PASSED'
 
         df.loc[0, ['test_type', 'results', 'uniques_left', 'uniques_right', 'diff_pct', 'threshold']] = \
-            ['numberOfRows', result, left, right, diff_pct, threshold]
+            ['NumberOfRows', result, left, right, diff_pct, threshold]
 
         return df
 
     def __get_df_column_list(self, df):
         return [s for s in df.columns.tolist()]
 
-    def compare_group_count(self, df_A, df_B):
+    def compare_group_count(self, df_A, df_B, test_type='DistinctValue'):
         """
         df_A, df_B are dataframes from query (count group by) with last column 'cnt' as the count for each group
         merge df_A and df_B on the group key with outer join and column '_merge' to indicate which dataframe each
@@ -389,9 +389,9 @@ class TableComp:
         cols = colA[:]
         if 'cnt' in colA:
             cols.remove('cnt')
-            df_res.loc[0, 'test_type'] = 'GroupByCount'
+            df_res.loc[0, 'test_type'] = 'CountGroupByColumn'
         else:
-            df_res.loc[0, 'test_type'] = 'DistinctValue'
+            df_res.loc[0, 'test_type'] = test_type
 
         df = pd.merge(df_A, df_B, on=cols, how='outer', indicator=True, suffixes=('_left', '_right')).sort_values(cols)
 
@@ -442,7 +442,7 @@ class TableComp:
         res = self.compare_count(tableA.row_count, tableB.row_count)
 
         # compare column name and type
-        df_res, dft = self.compare_group_count(tableA.get_column_names_with_type(), tableB.get_column_names_with_type())
+        df_res, dft = self.compare_group_count(tableA.get_column_names_with_type(), tableB.get_column_names_with_type(), 'ColumnNameAndType')
         if df_res['results'].iloc[0] != 'PASSED':
             print(df_res)
             print(dft)

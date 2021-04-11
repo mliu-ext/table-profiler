@@ -60,7 +60,7 @@ run table profiler and save esults to an excel file
 
 Examples
 
-`python tbl_profiler_sn.py SNOWFLAKE_SAMPLE_DATA.TPCDS_SF100TCL.Call_Center -f test.xlsx`
+`python tbl_profiler_sn.py SNOWFLAKE_SAMPLE_DATA.TPCDS_SF100TCL.Call_Center -f output/Call_Center.xlsx`
 
 ### run table comparison tool tbl_compare.py
 
@@ -75,7 +75,7 @@ Examples
 
 `python tbl_compare.py SNOWFLAKE_SAMPLE_DATA.TPCDS_SF100TCL.Call_Center SNOWFLAKE_SAMPLE_DATA.TPCDS_SF100TCL.Call_Center`
 
-`python tbl_compare.py RAW.JING_VIPER.RAW_VIPER_20201110 RAW.JING_VIPER.RAW_VIPER_20201110 -f test.xlsx`
+`python tbl_compare.py RAW.JING_VIPER.RAW_VIPER_20201110 RAW.JING_VIPER.RAW_VIPER_20201110 -f output/RAW_VIPER_20201110.xlsx`
 
 `python tbl_compare.py RAW.JING_VIPER.RAW_VIPER_20201110 SNOWFLAKE_SAMPLE_DATA.TPCDS_SF100TCL.Call_Center`
 
